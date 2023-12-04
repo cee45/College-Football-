@@ -28,7 +28,7 @@ def get_team_info(conference=None):
     headers = {
     'Accept': 'application/json',
     'Authorization': f'Bearer {cfb_key}'
-}
+    }
 
     r = requests.get(base_url, params=payload, headers=headers)
     if r.status_code == 200:
@@ -40,10 +40,25 @@ def get_team_info(conference=None):
         raise Exception('Request failed with status code: '+str(r.status_code))
     
 
-result = get_team_info()
-
-print(result)
-
+def get_conference_list():
+    '''
+        Returns a DataFrame containing a list of conferences and their full
+        names
+    '''
+    base_url = 'https://api.collegefootballdata.com/conferences'
+    payload = {}
+    
+    headers = {
+    'Accept': 'application/json',
+    'Authorization': f'Bearer {cfb_key}'
+    }
+    
+    r = requests.get(base_url, params=payload, headers=headers)
+    if r.status_code == 200:
+        return pd.DataFrame(r.json())
+    else:
+        raise Exception('Request failed with status code: '+str(r.status_code))
+    
 
 
 
